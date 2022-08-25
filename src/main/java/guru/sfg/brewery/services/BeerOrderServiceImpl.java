@@ -39,12 +39,17 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@AllArgsConstructor
 public class BeerOrderServiceImpl implements BeerOrderService {
 
     private final BeerOrderRepository beerOrderRepository;
     private final CustomerRepository customerRepository;
     private final BeerOrderMapper beerOrderMapper;
+
+    public BeerOrderServiceImpl(BeerOrderRepository beerOrderRepository, CustomerRepository customerRepository, BeerOrderMapper beerOrderMapper) {
+        this.beerOrderRepository = beerOrderRepository;
+        this.customerRepository = customerRepository;
+        this.beerOrderMapper = beerOrderMapper;
+    }
 
     @Override
     public BeerOrderPagedList listOrders(UUID customerId, Pageable pageable) {
