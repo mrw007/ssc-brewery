@@ -1,3 +1,6 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/mrw007/ssc-brewery/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/mrw007/ssc-brewery/tree/master)
+[![codecov](https://codecov.io/gh/mrw007/ssc-brewery/branch/master/graph/badge.svg?token=REAZESR1C4)](https://codecov.io/gh/mrw007/ssc-brewery)
+
 # Brewery Spring MVC Monolith
 
 This repository contains source code examples used to support my on-line courses about the Spring Framework.
