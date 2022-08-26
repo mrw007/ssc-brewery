@@ -7,10 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -21,7 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return  NoOpPasswordEncoder.getInstance();
 //        return new LdapShaPasswordEncoder();
 //        return new StandardPasswordEncoder();
-        return new BCryptPasswordEncoder();
+//        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
@@ -64,15 +63,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("spring")
 //                .password("{noop}spring")
-                .password("spring")
+//                .password("spring")
+                .password("{bcrypt}$2a$10$.ULEZM7Wz93RFZvA4u9ymuyeWmlF1zUz3TI21v3N//GQ12aIDRHjO")
                 .roles("ADMIN")
                 .and()
                 .withUser("user")
 //                .password("{noop}password")
 //                .password("password") //noOp
 //                .password("{SSHA}Y/M5fqeUqHVXbm5nMo+u1BN+3Fq+cw7D3jaxuw==") // LDAP
-                .password("6f1ec3f350b971e8c79019ee3e4d733c93fd4208ce548ad2a7cec62c8ee6c4e1a55fae42050159c1") // SHA-256
-                .password("$2a$10$MPphR2XwnvqmVWutmN4PXu.OZkboKRRIBTCJ4RetSjnSBpStlYzxG") // BCrypt
+                .password("{sha256}92aa9949b438050c1ee17cee5c0d8caff541765606670f40b0d18f5271d26ee2655088424112bf69") // SHA-256
+//                .password("$2a$10$MPphR2XwnvqmVWutmN4PXu.OZkboKRRIBTCJ4RetSjnSBpStlYzxG") // BCrypt
+                .roles("USER")
+                .and()
+                .withUser("scott")
+                .password("{ldap}{SSHA}GMqqQ6oIleVEmlQHedJAdt40QhvydaihNbxDvA==")
                 .roles("USER");
     }
 }
