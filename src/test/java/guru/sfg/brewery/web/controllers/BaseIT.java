@@ -15,7 +15,7 @@ public class BaseIT {
     @Autowired
     WebApplicationContext applicationContext;
 
-    MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {

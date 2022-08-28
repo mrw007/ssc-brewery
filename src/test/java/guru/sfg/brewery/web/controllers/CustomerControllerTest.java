@@ -77,11 +77,10 @@ class CustomerControllerTest {
                 .andExpect(model().attributeExists("customer"));
         verifyZeroInteractions(customerRepository);
     }
-//ToDO: Fix stubbing error
+
     @Test
-    @Disabled
     void processFindFormReturnMany() throws Exception{
-        when(customerRepository.findAllByCustomerNameLike("John Doe")).thenReturn(customerList);
+        when(customerRepository.findAllByCustomerNameLike(anyString())).thenReturn(customerList);
 
         mockMvc.perform(get("/customers"))
                 .andExpect(status().isOk())
