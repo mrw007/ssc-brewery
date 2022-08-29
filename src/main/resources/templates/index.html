@@ -43,7 +43,7 @@
 <div class="row">
     <div class="col-md-12">
         <p sec:authorize="isAuthenticated()" th:text="'Welcome: ' + ${#authentication?.principal?.username}">User</p>
-        <p><a th:href="@{/logout}">Logout</a></p>
+        <p><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></p>
     </div>
 </div>
 
