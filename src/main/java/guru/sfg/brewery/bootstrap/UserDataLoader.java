@@ -48,6 +48,16 @@ public class UserDataLoader implements CommandLineRunner {
         Authority listBrewery = authorityRepository.save(Authority.builder().permission(Permissions.BREWERY_LIST).build());
         Authority deleteBrewery = authorityRepository.save(Authority.builder().permission(Permissions.BREWERY_DELETE).build());
 
+        // Beer Order auths
+        Authority createOrder = authorityRepository.save(Authority.builder().permission(Permissions.ORDER_CREATE).build());
+        Authority updateOrder = authorityRepository.save(Authority.builder().permission(Permissions.ORDER_UPDATE).build());
+        Authority readOrder = authorityRepository.save(Authority.builder().permission(Permissions.ORDER_READ).build());
+        Authority deleteOrder = authorityRepository.save(Authority.builder().permission(Permissions.ORDER_DELETE).build());
+        Authority createOrderCustomer = authorityRepository.save(Authority.builder().permission(Permissions.CUSTOMER_ORDER_CREATE).build());
+        Authority updateOrderCustomer = authorityRepository.save(Authority.builder().permission(Permissions.CUSTOMER_ORDER_UPDATE).build());
+        Authority readOrderCustomer = authorityRepository.save(Authority.builder().permission(Permissions.CUSTOMER_ORDER_READ).build());
+        Authority deleteOrderCustomer = authorityRepository.save(Authority.builder().permission(Permissions.CUSTOMER_ORDER_DELETE).build());
+
         // Roles
         Role adminRole = roleRepository.save(Role.builder().roleName("ADMIN").build());
         Role userRole = roleRepository.save(Role.builder().roleName("USER").build());
@@ -55,9 +65,13 @@ public class UserDataLoader implements CommandLineRunner {
 
         adminRole.setAuthorities(Set.of(createBeer, updateBeer, readBeer, deleteBeer,
                 createCustomer, readCustomer, listCustomer, updateCustomer, deleteCustomer,
-                createBrewery, readBrewery, listBrewery, updateBrewery, deleteBrewery));
+                createBrewery, readBrewery, listBrewery, updateBrewery, deleteBrewery,
+                createOrder, updateOrder, readOrder, deleteOrder));
 
-        customerRole.setAuthorities(Set.of(readBeer, readCustomer, listCustomer, readBrewery, listBrewery));
+        customerRole.setAuthorities(Set.of(readBeer,
+                readCustomer, listCustomer,
+                readBrewery, listBrewery,
+                createOrderCustomer, updateOrderCustomer, readOrderCustomer, deleteOrderCustomer));
 
         userRole.setAuthorities(Set.of(readBeer, readCustomer, readBrewery));
 

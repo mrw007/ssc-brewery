@@ -24,4 +24,14 @@ public final class Permissions {
     public static final String BREWERY_LIST = "brewery.list";
     public static final String BREWERY_UPDATE = "brewery.update";
     public static final String BREWERY_DELETE = "brewery.delete";
+
+    // Beer Order Permissions
+    public static final String ORDER_CREATE = "order.create";
+    public static final String ORDER_READ = "order.read";
+    public static final String ORDER_UPDATE = "order.update";
+    public static final String ORDER_DELETE = "order.delete";
+    public static final String CUSTOMER_ORDER_CREATE = "customer.order.create";
+    public static final String CUSTOMER_ORDER_READ = "customer.order.read";
+    public static final String CUSTOMER_ORDER_UPDATE = "customer.order.update";
+    public static final String CUSTOMER_ORDER_DELETE = "customer.order.delete";
 }
