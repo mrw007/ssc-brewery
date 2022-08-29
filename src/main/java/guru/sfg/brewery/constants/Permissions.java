@@ -30,8 +30,10 @@ public final class Permissions {
     public static final String ORDER_READ = "order.read";
     public static final String ORDER_UPDATE = "order.update";
     public static final String ORDER_DELETE = "order.delete";
+    public static final String ORDER_PICKUP = "order.pickup";
     public static final String CUSTOMER_ORDER_CREATE = "customer.order.create";
     public static final String CUSTOMER_ORDER_READ = "customer.order.read";
     public static final String CUSTOMER_ORDER_UPDATE = "customer.order.update";
     public static final String CUSTOMER_ORDER_DELETE = "customer.order.delete";
+    public static final String CUSTOMER_ORDER_PICKUP = "customer.order.pickup";
 }
