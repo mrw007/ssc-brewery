@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+    private final PersistentTokenRepository persistentTokenRepository;
 
     // needed for use with spring data JPA SPel
     @Bean
@@ -51,12 +53,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .failureUrl("/?error");
                 })
                 .logout(httpSecurityLogoutConfigurer -> {
-                    httpSecurityLogoutConfigurer.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    httpSecurityLogoutConfigurer
+                            .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                             .logoutSuccessUrl("/?logout").permitAll();
                 })
                 .httpBasic()
                 .and().csrf().ignoringAntMatchers("/h2-console/**", "/api/**")
-                .and().rememberMe().key("sfg-key").userDetailsService(userDetailsService);
+                .and().rememberMe()
+                .tokenRepository(persistentTokenRepository)
+                .userDetailsService(userDetailsService);
 
         // h2 console config
         http.headers().frameOptions().sameOrigin();
