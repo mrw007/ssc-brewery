@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserController {
     public static final String USER_URL = "/user";
+    public static final String USER_REGISTER_2_FA = "user/register2fa";
 
     private final UserRepository userRepository;
     private final GoogleAuthenticator googleAuthenticator;
@@ -34,18 +35,34 @@ public class UserController {
         log.debug("Google QR URL: " + url);
 
         model.addAttribute("googleurl", url);
-        return "user/register2fa";
+        return USER_REGISTER_2_FA;
+    }
+
+    @PostMapping
+    public String confirm2FA(@RequestParam Integer verifyCode) {
+
+        User user = getUser();
+
+        log.debug("Entered Code is: " + verifyCode);
+
+
+        if (googleAuthenticator.authorizeUser(user.getUsername(), verifyCode)) {
+
+            User savedUser = userRepository.findById(user.getId()).orElseThrow();
+            savedUser.setUserGoogle2FA(true);
+            userRepository.save(savedUser);
+
+            return "index";
+        } else {
+            // bad code
+            return USER_REGISTER_2_FA;
+        }
+
+
     }
 
     private static User getUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    @PostMapping("/register2fa")
-    public String confirm2FA(@RequestParam Integer verifyCode) {
-
-        // TODO - impl
-
-        return "index";
-    }
 }
