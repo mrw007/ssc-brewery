@@ -26,7 +26,7 @@ public class GoogleCredentialRepository implements ICredentialRepository {
     public void saveUserCredentials(String username, String secretKey, int validationCode, List<Integer> scratchCodes) {
         User user = userRepository.findByUsername(username).orElseThrow();
         user.setGoogle2FASecret(secretKey);
-        user.setUserGoogle2FA(true);
+        user.setUsedGoogle2FA(true);
         userRepository.save(user);
     }
 }

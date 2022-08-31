@@ -51,7 +51,7 @@ public class UserController {
         if (googleAuthenticator.authorizeUser(user.getUsername(), verifyCode)) {
 
             User savedUser = userRepository.findById(user.getId()).orElseThrow();
-            savedUser.setUserGoogle2FA(true);
+            savedUser.setUsedGoogle2FA(true);
             userRepository.save(savedUser);
 
             return INDEX;
