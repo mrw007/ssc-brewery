@@ -39,7 +39,8 @@ public class Google2FAFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        StaticResourceRequest.StaticResourceRequestMatcher staticResourceRequestMatcher = PathRequest.toStaticResources().atCommonLocations();
+        StaticResourceRequest.StaticResourceRequestMatcher staticResourceRequestMatcher =
+                PathRequest.toStaticResources().atCommonLocations();
 
         if (urlIs2FA.matches(request) || urlResource.matches(request) ||
                 staticResourceRequestMatcher.matches(request)) {

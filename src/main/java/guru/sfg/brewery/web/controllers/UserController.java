@@ -31,7 +31,7 @@ public class UserController {
     public String register2FA(Model model) {
 
         User user = getUser();
-        String url = GoogleAuthenticatorQRGenerator.getOtpAuthURL("SFG", user.getUsername(),
+        String url = GoogleAuthenticatorQRGenerator.getOtpAuthURL("SFG-BRW", user.getUsername(),
                 googleAuthenticator.createCredentials(user.getUsername()));
 
         log.debug("Google QR URL: " + url);
@@ -40,13 +40,12 @@ public class UserController {
         return USER_REGISTER_2_FA;
     }
 
-    @PostMapping
+    @PostMapping("/register2fa")
     public String confirm2FA(@RequestParam Integer verifyCode) {
 
         User user = getUser();
 
         log.debug("Entered Code is: " + verifyCode);
-
 
         if (googleAuthenticator.authorizeUser(user.getUsername(), verifyCode)) {
 
