@@ -21,7 +21,7 @@ public class BaseIT {
     protected void setUp() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
-                .apply(springSecurity())
+//                .apply(springSecurity())
                 .build();
     }
 
