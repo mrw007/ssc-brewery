@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     public static final String USER_URL = "/user";
     public static final String USER_REGISTER_2_FA = "user/register2fa";
+    public static final String USER_VERIFY_2_FA = "user/verify2fa";
+    public static final String INDEX = "index";
 
     private final UserRepository userRepository;
     private final GoogleAuthenticator googleAuthenticator;
@@ -52,13 +54,27 @@ public class UserController {
             savedUser.setUserGoogle2FA(true);
             userRepository.save(savedUser);
 
-            return "index";
-        } else {
-            // bad code
-            return USER_REGISTER_2_FA;
+            return INDEX;
         }
+        // bad code
+        return USER_REGISTER_2_FA;
+    }
 
+    @GetMapping("/verify2fa")
+    public String verify2FA() {
+        return USER_VERIFY_2_FA;
+    }
 
+    @PostMapping("/verify2fa")
+    public String verifyPostOf2FA(@RequestParam Integer verifyCode) {
+        User user = getUser();
+
+        if (googleAuthenticator.authorizeUser(user.getUsername(), verifyCode)) {
+            ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).setGoogle2FARequired(false);
+
+            return INDEX;
+        }
+        return USER_VERIFY_2_FA;
     }
 
     private static User getUser() {
